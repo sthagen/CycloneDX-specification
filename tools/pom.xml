@@ -51,10 +51,11 @@
         <maven.appassembler.plugin.version>1.10</maven.appassembler.plugin.version>
         <maven.assembly.plugin.version>3.1.0</maven.assembly.plugin.version>
         <!-- Library Versions -->
-        <lib.commons.io.version>2.5</lib.commons.io.version>
+        <lib.commons.io.version>2.7</lib.commons.io.version>
         <lib.commons.lang3.version>3.6</lib.commons.lang3.version>
         <lib.commons.text.version>1.2</lib.commons.text.version>
         <lib.unirest.version>1.4.9</lib.unirest.version>
+        <lib.cyclonedx.core.java.version>7.1.2</lib.cyclonedx.core.java.version>
     </properties>
 
     <scm>
@@ -85,6 +86,18 @@
         </repository>
     </distributionManagement>
 
+    <repositories>
+        <!-- Resolve snapshot releases -->
+        <repository>
+            <id>ossrh-snapshot</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencies>
         <!-- Apache Commons -->
         <dependency>
@@ -111,17 +124,26 @@
         </dependency>
         <!-- Unit tests -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.cyclonedx</groupId>
             <artifactId>cyclonedx-core-java</artifactId>
-            <version>2.0.2</version>
+            <version>${lib.cyclonedx.core.java.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
